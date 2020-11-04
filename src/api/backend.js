@@ -1,11 +1,11 @@
 import axios from "axios";
 import getEnvVars from "../../enviroment";
 
-const {apiURLGenius} = getEnvVars();
+const { apiURLGenius } = getEnvVars();
 
 //Instancias de conexión
 const instance = axios.create ({
-    baseURLGenius : apiURLGenius
+    baseURL: apiURLGenius
 });
 
 export default instance;

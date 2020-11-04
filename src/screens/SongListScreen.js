@@ -1,7 +1,7 @@
 //Importar módulos necesarios
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, Image, Dimensions } from "react-native";
-import { Container, Input, Item, H1, Icon, Button, Header, Spinner, View } from "native-base";
+import { Container, Input, Item, H1, Header, Spinner, View } from "native-base";
 import { FontAwesome } from '@expo/vector-icons';
 import backend from "../api/backend";
 import getEnvVars from "../../enviroment";
@@ -10,7 +10,7 @@ import getEnvVars from "../../enviroment";
 const { width, height } = Dimensions.get("window");
 
 //Acces Token de Genius para peticiones
-const {apiAccessTokenGenius, apiURLGenius}=getEnvVars();
+const { apiAccessTokenGenius }=getEnvVars();
 
 //Variable que contiene la pantalla
 const SongListScreen = () => {
@@ -22,21 +22,20 @@ const SongListScreen = () => {
 
   const getSongs = async () => {
     //Consulta a API Genius y for para sacar 10 ids de canciones para mostrar en la pantalla principal
-    //random de 10 a 2000, luego se sacan 4 canciones desde el numero que salga random en adelante
+    //random de 10 a 2000, luego se sacan 10 canciones desde el numero que salga random en adelante
     let randomIdSong = Math.round(Math.random()*(2000-10)+parseInt(10));
     const randomSongs = []; //arreglo de objetos
     try {
-      //Buscamos 4 canciones aleatorias para mostrar en la primera pantalla de la APP
-      for (let numero = randomIdSong; numero < (randomIdSong + 4); numero++) {
-        randomSongs.push(
-          await backend.get(`${apiURLGenius}songs/${numero}?access_token=${apiAccessTokenGenius}`)
+      //Buscamos 10 canciones aleatorias para mostrar en la primera pantalla de la APP
+      for (let numero = randomIdSong; numero < (randomIdSong + 10); numero++) {
+          randomSongs.push(
+          await backend.get(`songs/${numero}?access_token=${apiAccessTokenGenius}`)
         );
       }
       //Se asignan los valores recopilados a nuestra variable song
       randomSongs.forEach(randomSong => {
         setSongs(randomSong.data);
       });
-      console.log("madeit");
     } catch (error) {
       setError(true);
     }
@@ -52,7 +51,7 @@ const SongListScreen = () => {
   if (!songs) {
     return (
       <View style={{ flex: 1, justifyContent: "center" }}>
-        <Spinner color="f05454" />
+        <Spinner color="#f05454" />
       </View>
     );
   }

@@ -1,6 +1,6 @@
 //Importar módulos necesarios
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, Image, Dimensions } from "react-native";
+import { StyleSheet, Text, Image, Dimensions, FlatList } from "react-native";
 import { Container, Input, Item, H1, Header, Spinner, View } from "native-base";
 import { FontAwesome } from '@expo/vector-icons';
 import backend from "../api/backend";
@@ -23,7 +23,7 @@ const SongListScreen = () => {
   const getSongs = async () => {
     //Consulta a API Genius y for para sacar 10 ids de canciones para mostrar en la pantalla principal
     //random de 10 a 2000, luego se sacan 10 canciones desde el numero que salga random en adelante
-    let randomIdSong = Math.round(Math.random()*(2000-10)+parseInt(10));
+    let randomIdSong = Math.round(Math.random()*(30000 - 20000)+parseInt(20000));
     const randomSongs = []; //arreglo de objetos
     try {
       //Buscamos 10 canciones aleatorias para mostrar en la primera pantalla de la APP
@@ -75,6 +75,11 @@ const SongListScreen = () => {
         style={styles.lyricalImage}
       />
       <H1>Recomendados hoy</H1>
+      <FlatList
+        data = { songs.description }
+        keyExtractor = {   }
+        
+      />
       <Text>Titulo de la cancion</Text>
       <Text>Artista</Text>
       <Text>Album</Text>
